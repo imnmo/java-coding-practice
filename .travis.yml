@@ -6,8 +6,4 @@ env:
 # default install command is just "mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V"
 install:
 - mvn clean install
-notifications:
-  email:
-    - instruimran@gmail.com
-
 sudo: false # route the build to the container-based infrastructure for a faster build
