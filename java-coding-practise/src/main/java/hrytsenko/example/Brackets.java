@@ -7,7 +7,6 @@ import java.util.Stack;
  */
 public final class Brackets
 {
-
     private Brackets()
     {
     }
@@ -21,10 +20,7 @@ public final class Brackets
      */
     public static boolean validate(String text)
     {
-        char[] myArray = text.toCharArray();
-        Stack myStackInward = new Stack<>();
-        Stack myStackOutward = new Stack<>();
-        boolean isBalanced = true;
+        char[] characters = text.toCharArray();
 
         if (text == null)
         {
@@ -35,43 +31,65 @@ public final class Brackets
             return true;
         }
 
-        //push items to two stack
-        for (int i = 0; i <= myArray.length - 1; i++)
+        Stack openBrackets = new Stack<>();
+        Stack closeBrackets = new Stack<>();
+        boolean balanced = true;
+
+        for (char character : characters)
         {
-            //add all symbols
-            if (myArray[i] == '{' || myArray[i] == '(' || myArray[i] == '[')
+            if (isaBooleanOpenCharacter(character))
             {
-                myStackInward.push(myArray[i]);
+                openBrackets.push(character);
             }
-            if (myArray[i] == ')' || myArray[i] == '}' || myArray[i] == ']')
+            if (isaBooleanClosedCharacter(character))
             {
-                myStackOutward.push(myArray[i]);
+                closeBrackets.push(character);
             }
         }
 
-        if (myStackInward.size() != myStackOutward.size())
+        if (openBrackets.size() != closeBrackets.size())
         {
             return false;
         }
-        //Do comparison on peeked elements
-        for (int i = myArray.length - 1; i != 0; i--)
+        if (openBrackets.empty() && closeBrackets.empty())
         {
-            if (myArray[i] == ')' || myArray[i] == '}' || myArray[i] == ']')
+            return true;
+        }
+        for (char character : characters)
+        {
+            if (isaBooleanClosedCharacter(character))
             {
-                if (myStackInward.peek() == '{' && myArray[i] == '}' ||
-                        myStackInward.peek() == '[' && myArray[i] == ']' ||
-                        myStackInward.peek() == '(' && myArray[i] == ')')
+                //For the exact position
+                if (openBrackets.peek() == character)
                 {
-                    isBalanced = true;
-                    myStackInward.pop();
+                    openBrackets.pop();
+                    balanced = true;
+
+                }
+                //on different position
+                else if (openBrackets.peek() == '{' && character == '}' ||
+                        openBrackets.peek() == '[' && character == ']' ||
+                        openBrackets.peek() == '(' && character == ')')
+                {
+                    balanced = true;
+                    openBrackets.pop();
                 }
                 else
                 {
-                    isBalanced = false;
+                    balanced = false;
                 }
             }
         }
-        return isBalanced;
+        return balanced;
     }
 
+    private static boolean isaBooleanOpenCharacter(char character)
+    {
+        return character == '{' || character == '(' || character == '[';
+    }
+
+    private static boolean isaBooleanClosedCharacter(char character)
+    {
+        return character == ')' || character == '}' || character == ']';
+    }
 }

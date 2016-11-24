@@ -82,4 +82,18 @@ public class BracketsTest
         Assert.assertFalse(valid);
     }
 
+    @Test
+    public void validateHackerRankCases()
+    {
+
+        boolean valid = Brackets.validate("3");
+        Assert.assertTrue(valid);
+        boolean valid2 = Brackets.validate("{[()]}");
+        Assert.assertTrue(valid2);
+        boolean valid3 = Brackets.validate("{[(])}");
+        Assert.assertFalse(valid3);
+        boolean valid4 = Brackets.validate("{{[[(())]]}}");
+        Assert.assertTrue(valid4);
+    }
+
 }
