@@ -12,3 +12,5 @@ You can use [Guava](https://github.com/google/guava).
 
 # status
 DONE!
+
+# refactored to cleancode principles
