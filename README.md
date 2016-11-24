@@ -1,5 +1,5 @@
 # java-coding-practise
-[![Build Status](https://travis-ci.org/mohamedi/java-coding-practise.svg?branch=master)](https://travis-ci.org/hrytsenko/gscripts)
+[![Build Status](https://travis-ci.org/mohamedi/java-coding-practise.svg?branch=master)](https://travis-ci.org/mohamedi/java-coding-practise)
 # 23.1.2016
 
 # Tasks
