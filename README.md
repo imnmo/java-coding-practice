@@ -1,16 +1,18 @@
 # java-coding-practise
 [![Build Status](https://travis-ci.org/mohamedi/java-coding-practise.svg?branch=master)](https://travis-ci.org/mohamedi/java-coding-practise)
-# 23.1.2016
+###  Task-01(23.11.2016)
 
-# Tasks
+## Tasks
 * Provide an implementation that passes all tests.
-* Add parameterized tests.
-* Analyze the source code.
+* Add parameterized tests(TODO).
+* Analyze the source code(TODO).
 
-# Notes
+## Tip
 You can use [Guava](https://github.com/google/guava).
 
-# status
-DONE!
+## status
+completed
 
-# refactored to cleancode principles
+## notes
+* refactored to cleancode principles
+* covered edge cases
