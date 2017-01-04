@@ -13,6 +13,9 @@ public class Java8DemoTest {
 		myDemo.inAction();
 		myDemo.PrintNames();
 		myDemo.FindNameWithN();
+		myDemo.PickAnElement();
+		myDemo.CountTheCharacter();
+		myDemo.PickLongest();
 	}
 
 }
