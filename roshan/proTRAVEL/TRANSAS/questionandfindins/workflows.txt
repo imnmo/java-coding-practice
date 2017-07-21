@@ -1,0 +1,16 @@
+
+1) Below subgrid must be in seperate tab or with general tab - Pls clarify 
+·         Stakeholders sub-grid (aligned to the right)
+·         Competitors sub-grid 
+
+
+ 2) Also, Do I need to create a new fields(for eg. Reason of not TML, Sales Region etc..,) from scratch which doesnt exist in the system.
+ 
+ 3) In the existing solution for Oppurtunity we have tabs (like v.1) and in Accounts we have tabs (like website preview) is not mentioned in the document, what 
+ we do with these existing tabs kindly calrify.
+ 
+ 4)The Large & Risky [Yes/No]  should I create a new field or  use existing field, similarily for probability field pls clrify 
+ 
+ Dealer Areas of Activity_section_1
+ 
+
