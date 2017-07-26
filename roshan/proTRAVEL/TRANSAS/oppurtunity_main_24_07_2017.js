@@ -68,7 +68,7 @@ opportunityMain.IFRAME_JetProjectFoldersV2_onload = function () {
 };
 
 opportunityMain.OnLoadForm = function () {
-    
+    debugger;
     try {
         var CRM_FORM_TYPE_CREATE = 1;
         var CRM_FORM_TYPE_UPDATE = 2;
@@ -91,15 +91,14 @@ opportunityMain.OnLoadForm = function () {
 
             debugger;
 
-            // Show ECDIS QTY based on the selection of the solution type
+            /* Show ECDIS QTY*/
             parent.$('#new_solutions option:selected').text() == "Ship Solutions" ? $('#new_ecdiswsqty').parents("tr:first").show() : $('#new_ecdiswsqty').parents("tr:first").hide();
 
             /* Finance Tab hide */
-            if (parent.$('#Financial KPI'))
-            {  
+            if (parent.$('#Financial KPI')) {
                 parent.$('#Financial KPI').hide();
             }
-            
+
             //Xrm.Page.ui.tabs.get("Financial KPI").setVisible(false);
 
             /* PWS v.1 Tab hide */
@@ -145,7 +144,7 @@ opportunityMain.OnLoadForm = function () {
                 parent.$('#new_marketsector_i option').remove();
                 parent.$("#new_marketsector_i").parents("tr:first").hide();
             }
-           
+
 
             // only for solutions which market sectors
             //if (Xrm.Page.getAttribute("new_solutions").getSelectedOption() == "Ship Solutions" || "Ship Traffic Control Solutions" || "Fleet Operation Solutions" || "Academy Solutions") {
@@ -195,50 +194,52 @@ opportunityMain.OnLoadForm = function () {
 
         // INVESTMENT TAB
         var InvestmentTextValue = "Investment";
-
-        if (Xrm.Page.getAttribute("new_projecttype").getSelectedOption == InvestmentTextValue) {
-            Xrm.Page.ui.tabs.get("InvestmentProjectDetails").setVisible(false);
-        }
-        if (Xrm.Page.getAttribute("new_projecttype").getText() == InvestmentTextValue) {
-            Xrm.Page.ui.tabs.get("InvestmentProjectDetails").setVisible(false);
-        }
-            //if (Xrm.Page.getAttribute("new_meetingdate").getText == InvestmentTextValue) {
-            //    Xrm.Page.getAttribute("tab5Tab").style.display = "inline";
-            //}
-        else {
-            Xrm.Page.ui.tabs.get("InvestmentProjectDetails").setVisible(true);
+        if (Xrm.Page.ui.tabs.get("InvestmentProjectDetails") != null) {
+            if (Xrm.Page.getAttribute("new_projecttype").getSelectedOption == InvestmentTextValue) {
+                Xrm.Page.ui.tabs.get("InvestmentProjectDetails").setVisible(false);
+            }
+            if (Xrm.Page.getAttribute("new_projecttype").getText() == InvestmentTextValue) {
+                Xrm.Page.ui.tabs.get("InvestmentProjectDetails").setVisible(false);
+            }
+                //if (Xrm.Page.getAttribute("new_meetingdate").getText == InvestmentTextValue) {
+                //    Xrm.Page.getAttribute("tab5Tab").style.display = "inline";
+                //}
+            else {
+                Xrm.Page.ui.tabs.get("InvestmentProjectDetails").setVisible(true);
+            }
         }
         // END OF INVESTMENT TAB
 
         if ((Xrm.Page.ui.getFormType() == CRM_FORM_TYPE_CREATE)) {
             // hide Navigational section
-            Xrm.Page.ui.tabs.get("General").sections.get("Navigational Project").setVisible(false);
+            Xrm.Page.ui.tabs.get("Administration").sections.get("Navigational Project").setVisible(false);
 
             // hide Order Information section
-            Xrm.Page.ui.tabs.get("General").sections.get("Order Information").setVisible(false);
+            Xrm.Page.ui.tabs.get("Administration").sections.get("Order Information").setVisible(false);
         }
 
         if ((Xrm.Page.ui.getFormType() == CRM_FORM_TYPE_UPDATE)) {
             if (Xrm.Page.getAttribute("new_department").getSelectedOption == 'Navigation') {
                 // show Navigational section
-                Xrm.Page.ui.tabs.get("General").sections.get("Navigational Project").setVisible(true);
+                Xrm.Page.ui.tabs.get("Administration").sections.get("Navigational Project").setVisible(true);
             }
             else {
                 // hide Navigational section
-                Xrm.Page.ui.tabs.get("General").sections.get("Navigational Project").setVisible(false);
+                Xrm.Page.ui.tabs.get("Administration").sections.get("Navigational Project").setVisible(false);
             }
 
             if (Xrm.Page.getAttribute("statuscode").getSelectedOption == 'Ordered' ||
                 Xrm.Page.getAttribute("statuscode").getSelectedOption == 'Invoiced' ||
                 Xrm.Page.getAttribute("statuscode").getSelectedOption == 'Funds received' ||
-                Xrm.Page.getAttribute("statuscode").getSelectedOption == 'Suspended') {
+                 Xrm.Page.getAttribute("statuscode").getSelectedOption == 'Suspended'
+                ) {
                 /* Ordered, Invoiced, Funds received, Suspended */
                 // show Order Information section
-                Xrm.Page.ui.tabs.get("General").sections.get("Order Information").setVisible(true);
+                Xrm.Page.ui.tabs.get("Administration").sections.get("Order Information").setVisible(true);
             }
             else {
                 // hide Order Information section
-                Xrm.Page.ui.tabs.get("General").sections.get("Order Information").setVisible(false);
+                Xrm.Page.ui.tabs.get("Administration").sections.get("Order Information").setVisible(false);
             }
         }
 
@@ -300,7 +301,7 @@ opportunityMain.OnLoadForm = function () {
         //        }
         //    });
         //}
-       
+
         function getOfficeCode(name) {
             // returns solution A3 code for office name
             var code = name.substring(0, 3);
@@ -1134,7 +1135,18 @@ function new_solutions_onchange() {
 //        console.log(e.message);
 //    }
 //}
-
+function estimatedOrderDate_onchange() {
+    debugger;
+    var EstOrderDate = Xrm.Page.getControl("new_actualorderdate").getAttribute();
+    var now = new Date();
+    if (now > EstOrderDate) {
+       
+        Xrm.Page.ui.setFormNotification("Please provide Est.OrderDate a value in future ", "ERROR");
+    }
+    else if (now < EstOrderDate) {
+        Xrm.Page.ui.clearFormNotification();
+    }
+}
 function new_salestype_onchange() {
     try {
         debugger;
@@ -1237,14 +1249,15 @@ function statuscode_onchange() {
         var SectionNumberOrder = 4;
         if (Xrm.Page.getAttribute("statuscode").getSelectedOption().text == 'Ordered' ||
             Xrm.Page.getAttribute("statuscode").getSelectedOption().text == 'Invoiced' ||
-            Xrm.Page.getAttribute("statuscode").getSelectedOption().text == 'Funds received') {
+            Xrm.Page.getAttribute("statuscode").getSelectedOption().text == 'Funds received'
+            ) {
             /* Ordered, Invoiced, Funds received, Suspended */
             // show Order Information section
-            Xrm.Page.ui.tabs.get("General").sections.get("Order Information").setVisible(false);
+            Xrm.Page.ui.tabs.get("Administration").sections.get("Order Information").setVisible(false);
         }
         else {
             // hide Order Information section
-            Xrm.Page.ui.tabs.get("General").sections.get("Order Information").setVisible(true);
+            Xrm.Page.ui.tabs.get("Administration").sections.get("Order Information").setVisible(true);
         }
     }
     catch (e) {
@@ -1278,11 +1291,11 @@ function new_department_onchange() {
                 // set probability to 100
                 crmForm.all.closeprobability.DataValue = 100;
                 // show Navigational section
-                Xrm.Page.ui.tabs.get("General").sections.get("Navigational Project").setVisible(true);
+                Xrm.Page.ui.tabs.get("Administration").sections.get("Navigational Project").setVisible(true);
             }
             else {
                 // hide Navigational section
-                Xrm.Page.ui.tabs.get("General").sections.get("Navigational Project").setVisible(false);
+                Xrm.Page.ui.tabs.get("Administration").sections.get("Navigational Project").setVisible(false);
             }
         }
     }
