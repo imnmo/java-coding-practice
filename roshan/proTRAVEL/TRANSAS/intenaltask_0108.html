@@ -116,7 +116,7 @@
     <script src="../pcm_/js/XrmServiceToolkit.min.js" type="text/javascript"></script>
 
     <div class="pcmContainer">
-        <form action ="#"  method="post">
+        <form action= " " method="post" name="contractBlocks">
             <table class="pcm-List-Header-Lite" id="pcmContractBlocks" style="margin-right: auto; margin-left: auto; empty-cells: hide;" border="0" cellspacing="1" cellpadding="1">
                 <thead>
                     <tr>
@@ -128,7 +128,7 @@
             <button title="Create Contract" class="pcmButton" id="pcmCreateButton" onclick="pcmCreateDocument()" type="button">Create Contract</button>
             <p></p>
             
-        </form action>
+       </form>
     </div>
 
     <!--<script src="../jqueryui.js" type="text/javascript"></script>
@@ -177,7 +177,7 @@
             table.innerHTML = '<thead><tr><th>' + localizedString.SelectContractBlocks[lcid] + '</th><th style="width:30%;">' + localizedString.EffectiveFromDate[lcid] + '</th></tr></thead>';
 
             for (var i = 0; i < contractBlocks.length; i++) {
-                debugger;
+               // debugger;
                 var contractBlockName = contractBlocks[i].attributes["ba.pcm_name"].value;
                 var contractBlockGuid = contractBlocks[i].attributes.pcm_contractblockid.id;
                 //Add the header row.
@@ -218,7 +218,7 @@
                         row.innerHTML += "\n<td style='color:red'>Abgelaufen</td>";
                     }
                 }
-                debugger;
+               // debugger;
                 var dvTable = document.getElementById("pcmContractBlocks");
                 dvTable.innerHTML = "";
                 dvTable.appendChild(table);
@@ -282,66 +282,37 @@
         };
 
         function callAction(jsonString) {
+           try {
             var pcm_CreateContractDocument = "pcm_CreateContractDocument";
-            try {
-                var requestXML = ""
-                requestMain += "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">";
-                requestMain += "  <s:Body>";
-                requestMain += "    <Execute xmlns=\"http://schemas.microsoft.com/xrm/2011/Contracts/Services\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">";
-                requestMain = '   <request xmlns:a=\"http://schemas.microsoft.com/xrm/2011/Contracts\">';
-                requestMain += "        <a:Parameters xmlns:b=\"http://schemas.datacontract.org/2004/07/System.Collections.Generic\">";
-                requestMain += "          <a:KeyValuePairOfstringanyType>";
-                requestMain += "            <b:key>Target</b:key>";
-                requestMain += "            <b:value i:type=\"a:EntityReference\">";
-                requestMain += "              <a:Id>" + window.parent.Xrm.Page.data.entity.getId() + "</a:Id>";
-                requestMain += "              <a:LogicalName>" + window.parent.Xrm.Page.data.entity.getEntityName() + "</a:LogicalName>";
-                requestMain += "              <a:Name i:nil=\"true\" />";
-                requestMain += "            </b:value>";
-                requestMain += "          </a:KeyValuePairOfstringanyType>";
-                requestMain += "          <a:KeyValuePairOfstringanyType>";
-                requestMain += "            <b:key>Selection</b:key>";
-                requestMain += "            <b:value i:type=\"c:string\" xmlns:c=\"http://www.w3.org/2001/XMLSchema\">" + jsonString + "</b:value>";
-                requestMain += "          </a:KeyValuePairOfstringanyType>";
-                requestMain += "        </a:Parameters>";
-                requestMain += "        <a:RequestId i:nil=\"true\" />"
-                requestMain += "        <a:RequestName>"+ pcm_CreateContractDocument + "</a:RequestName>";
-                requestMain += "      </request>";
-                requestMain += "    </Execute>";
-                requestMain += "  </s:Body>";
-                requestMain += "</s:Envelope>";
+            var requestXML = ""
+            requestXML += "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">";
+            requestXML += " <s:Body>";
+            requestXML += " <Execute xmlns=\"http://schemas.microsoft.com/xrm/2011/Contracts/Services\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">";
+            requestXML += " <request xmlns:a=\"http://schemas.microsoft.com/xrm/2011/Contracts\">";
+            requestXML += " <a:Parameters xmlns:b=\"http://schemas.datacontract.org/2004/07/System.Collections.Generic\">";
+            requestXML += " <a:KeyValuePairOfstringanyType>";
+            requestXML += " <b:key>Target</b:key>";
+            requestXML += " <b:value i:type=\"a:EntityReference\">";
+            requestXML += " <a:Id>" + window.parent.Xrm.Page.data.entity.getId() + "</a:Id>";
+            requestXML += " <a:LogicalName>" + window.parent.Xrm.Page.data.entity.getEntityName() + "</a:LogicalName>";
+            requestXML += " <a:Name i:nil=\"true\" />";
+            requestXML += " </b:value>";
+            requestXML += " </a:KeyValuePairOfstringanyType>";
+            requestXML += " <a:KeyValuePairOfstringanyType>";
+            requestXML += " <b:key>Selection</b:key>";
+            requestXML += " <b:value i:type=\"c:string\" xmlns:c=\"http://www.w3.org/2001/XMLSchema\">" + jsonString + "</b:value>";
+            requestXML += " </a:KeyValuePairOfstringanyType>";
+            requestXML += " </a:Parameters>";
+            requestXML += " <a:RequestId i:nil=\"true\" />";
+            requestXML += " <a:RequestName>" + pcm_CreateContractDocument + "</a:RequestName>";
+            requestXML += " </request>";
+            requestXML += " </Execute>";
+            requestXML += " </s:Body>";
+            requestXML += "</s:Envelope>";
 
 
-                var requestXML = ""
-    requestXML += "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">";
-    requestXML += "  <s:Body>";
-    requestXML += "    <Execute xmlns=\"http://schemas.microsoft.com/xrm/2011/Contracts/Services\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">";
-    requestXML += "      <request xmlns:a=\"http://schemas.microsoft.com/xrm/2011/Contracts\">";
-    requestXML += "        <a:Parameters xmlns:b=\"http://schemas.datacontract.org/2004/07/System.Collections.Generic\">";
-    requestXML += "          <a:KeyValuePairOfstringanyType>";
-    requestXML += "            <b:key>Target</b:key>";
-    requestXML += "            <b:value i:type=\"a:EntityReference\">";
-    requestXML += "              <a:Id>" + entityId + "</a:Id>";
-    requestXML += "              <a:LogicalName>" + entityName + "</a:LogicalName>";
-    requestXML += "              <a:Name i:nil=\"true\" />";
-    requestXML += "            </b:value>";
-    requestXML += "          </a:KeyValuePairOfstringanyType>";
-    requestXML += "          <a:KeyValuePairOfstringanyType>";
-    requestXML += "            <b:key>ProjectName</b:key>";
-    requestXML += "            <b:value i:type=\"c:string\" xmlns:c=\"http://www.w3.org/2001/XMLSchema\">" + project
-Name + "</b:value>";
-    requestXML += "          </a:KeyValuePairOfstringanyType>";
-    requestXML += "        </a:Parameters>";
-    requestXML += "        <a:RequestId i:nil=\"true\" />";
-    requestXML += "        <a:RequestName>" + requestName + "</a:RequestName>";
-    requestXML += "      </request>";
-    requestXML += "    </Execute>";
-    requestXML += "  </s:Body>";
-    requestXML += "</s:Envelope>";
-
-                console.log('Execute "pcm_CreateContractDocument" request');
-
-                var cloneResp = XrmServiceToolkit.Soap.Execute(requestMain);
-                var $response = $(cloneResp);
+                var cloneResp = XrmServiceToolkit.Soap.Execute(requestXML);
+                var $response = parent.$(cloneResp);
 
                 console.log('Response length received: ' + $response.length);
 
@@ -362,10 +333,10 @@ Name + "</b:value>";
                     Xrm.Utility.alertDialog("An error occured while creating document.");
                 }
 
-            }
-            catch (e) {
-                Xrm.Utility.alertDialog(e.message, function () { });
-            }
+           }
+          catch (e) {
+              Xrm.Utility.alertDialog(e.message, function () { });
+         }
         }
     </script>
 
@@ -386,7 +357,7 @@ Name + "</b:value>";
             var o = {};
             var a = this.serializeArray();
             parent.$.each(a, function () {
-                if (o[this.name] !== undefined) {
+                if (o[this.name]) {
                     if (!o[this.name].push) {
                         o[this.name] = [o[this.name]];
                     }
@@ -401,7 +372,7 @@ Name + "</b:value>";
         console.log('create function');
 
         var pcmCreateDocument = function () {
-
+            debugger;
             console.log('running function pcmCreateDocument');
 
             if (window.parent.Xrm.Page.data.entity.getIsDirty()) {
@@ -411,16 +382,17 @@ Name + "</b:value>";
                 console.log('Form is not dirty. Continue with document creation.');
             }
 
-            var json = $('form').serializeObject();
+            var json = parent.$('#contractBlocks:input').serializeObject();
 
-            if (parent.$.isArray(json.blocks)) {
-                var guidsAsString = json.blocks.join(',');
+           if (parent.$.isArray(json.blocks)) {
+                var guidsAsString = json.crmFormSubmitId.join(',');
+                //var guidsAsString = "1428a48f-f414-e511-80cc-00155d0b0e15,3ae392a2-f414-e511-80cc-00155d0b0e15,1a60e6ad-f414-e511-80cc-00155d0b0e15,55cd5584-f414-e511-80cc-00155d0b0e15"
                 callAction(guidsAsString);
             }
-            else {
-                var guidAsString = json.blocks;
-                callAction(guidAsString);
-            }
+           else {
+               var guidAsString = json.crmFormSubmitId;
+               callAction(guidAsString);
+           }
 
         };
 
@@ -429,3 +401,4 @@ Name + "</b:value>";
 
 
 </body></html>
+
