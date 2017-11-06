@@ -1,0 +1,77 @@
+/// <reference path="C:\TFS - MSCRM\StructureTemplate\CRMFIRST.BDI.MainProject.WebResources\CommonLibraries/dynamics-web-api-callbacks.js" />
+/// <reference path="C:\TFS - MSCRM\BDI\CRMFIRST.BDI.MainProject\CRMFIRST.BDI.MainProject.WebResources\_IntellisenseEntityFiles/Group and Function Form - Information.js" />
+/// <reference path="C:\TFS - MSCRM\StructureTemplate\CRMFIRST.BDI.MainProject.WebResources\_IntellisenseEntityFiles/Xrm.js" />
+/// <reference path="C:\TFS - MSCRM\StructureTemplate\CRMFIRST.BDI.MainProject.WebResources\CommonLibraries/CrmFirst.CommonLibrary.Utility.js" />
+
+//For the CRUD Operation to CRM use DynamicsWebApi for Microsoft Dynamics CRM Web API - Documentation here: https://github.com/AleksandrRogov/DynamicsWebApi
+//Please use the version with the Callback
+
+var CrmFirst = CrmFirst || {};
+CrmFirst.BDI = CrmFirst.BDI || {};
+CrmFirst.BDI.MainProject = CrmFirst.BDI.MainProject || {};
+
+CrmFirst.BDI.MainProject.ContactFunctionInGroup = {
+    Form: {
+        Load: function () {
+            CrmFirst.BDI.MainProject.ContactFunctionInGroup.Form.attachEvents();
+        },
+        attachEvents: function () {
+            var me = CrmFirst.BDI.MainProject.ContactFunctionInGroup.Form;
+
+            //Attach dinamically all the form fields events here
+            Xrm.Page.getAttribute("crm1st_contactid").addOnChange(me.contactidOnChange);
+            Xrm.Page.getAttribute("crm1st_functionid").addOnChange(me.functionidOnChange);
+            Xrm.Page.getAttribute("crm1st_groupid").addOnChange(me.groupidOnChange);
+        },
+        contactidOnChange: function () {
+            CrmFirst.BDI.MainProject.ContactFunctionInGroup.Form._setName();
+
+            //Field specific event
+            //alert(Xrm.Page.getAttribute("name"));
+            //debugger;
+            //var dynamicsWebApi = new DynamicsWebApi({ webApiVersion: "8.2" });
+            
+            //if (Xrm.Page.getAttribute("primarycontactid").getValue() != null) {
+            //    var primaryContactId = Xrm.Page.getAttribute("primarycontactid").getValue()[0].id;
+            //    //Example of retrieve with DynamicsWebApi library
+            //    dynamicsWebApi.retrieve(primaryContactId, "contacts", function (rec) {
+            //        alert("Retrieved Contact: " + rec.fullname);
+            //    }, function (err) {
+            //        alert(err.message);
+            //    }, ["fullname", "emailaddress1"])
+            //}
+        },
+        functionidOnChange: function () {
+            CrmFirst.BDI.MainProject.ContactFunctionInGroup.Form._setName();
+        },
+        groupidOnChange: function () {
+            CrmFirst.BDI.MainProject.ContactFunctionInGroup.Form._setName();
+        },
+        _setName: function () {
+            if (Xrm.Page.getAttribute("crm1st_contactid").getValue() != null && Xrm.Page.getAttribute("crm1st_groupid").getValue() != null && Xrm.Page.getAttribute("crm1st_functionid").getValue()) {
+                var contactName = Xrm.Page.getAttribute("crm1st_contactid").getValue()[0].name;
+                var groupName = Xrm.Page.getAttribute("crm1st_groupid").getValue()[0].name;
+                var functionName = Xrm.Page.getAttribute("crm1st_functionid").getValue()[0].name;
+                Xrm.Page.getAttribute("crm1st_name").setValue(contactName + ' - ' + groupName + ' - ' + functionName);
+            }
+        }
+    } 
+    
+    //In case you have different business logic for different forms, add specific form scripts with another object
+    /*,FormName: {
+        Load: function () {
+            
+            CrmFirst.CustomerName.ProjectName.Account.Form.attachEvents();
+        },
+        attachEvents: function () {
+            var me = CrmFirst.CustomerName.ProjectName.Account.Form;
+
+            //Attach dinamically all the form fields events here
+            Xrm.Page.getAttribute("telephone1").addOnChange(me.FieldNameOnChange);
+        },
+        FieldNameOnChange: function () {
+            //Field specific event
+            alert(Xrm.Page.getAttribute("name"));
+        }
+    }*/
+};
